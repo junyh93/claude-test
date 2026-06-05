@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>톨리스트 — 우리 아이의 골든타임을 지키세요</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ab': '#000000',
+            'as': '#1c1c1e',
+            'as2': '#2c2c2e',
+            'as3': '#3a3a3c',
+            'aa': '#0a84ff',
+            'ag': '#30d158',
+            'ao': '#ff9f0a',
+            'ar': '#ff453a',
+            'ap': '#f5f5f7',
+            'ase': '#a1a1a6',
+            'at': '#6e6e73',
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseDot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.5; transform:scale(1.5); }
+    }
+    @keyframes scrollBounce {
+      0%,100% { transform:rotate(45deg) translateY(0); }
+      50%      { transform:rotate(45deg) translateY(6px); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+
+    .fu  { animation: fadeUp .6s ease both; }
+    .fu1 { animation: fadeUp .6s .1s ease both; }
+    .fu2 { animation: fadeUp .6s .2s ease both; }
+    .fu3 { animation: fadeUp .6s .3s ease both; }
+    .fu4 { animation: fadeUp .6s .4s ease both; }
+    .fu5 { animation: fadeUp .6s .5s ease both; }
+
+    .pulse-dot    { animation: pulseDot 1.5s ease-in-out infinite; }
+    .scroll-arrow { animation: scrollBounce 1.5s ease-in-out infinite; }
+
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity .6s ease,transform .6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    .tg-blue {
+      background: linear-gradient(135deg,#0a84ff,#30d158);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .tg-red {
+      background: linear-gradient(135deg,#ff453a,#ff9f0a);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .tg-shimmer {
+      background: linear-gradient(90deg, #f5f5f7 0%, #0a84ff 40%, #30d158 60%, #f5f5f7 100%);
+      background-size: 200% auto;
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      animation: shimmer 4s linear infinite;
+    }
+
+    .nav-blur {
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(0,0,0,.75);
+    }
+    .hero-bg  { background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(10,132,255,.14) 0%, transparent 70%); }
+    .story-bg { background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,159,10,.06) 0%, transparent 70%); }
+    .feat-bg  { background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(10,132,255,.07) 0%, transparent 70%); }
+    .cta-bg   { background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(10,132,255,.10) 0%, transparent 70%); }
+
+    .floating-btn { opacity:0; transform:translateY(20px); transition:opacity .3s,transform .3s; }
+    .floating-btn.on { opacity:1; transform:translateY(0); }
+
+    .sign-row .dot { transition:background .2s,border-color .2s; }
+    .sign-row.checked .dot {
+      background:#ff453a; border-color:#ff453a;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .sign-row.checked .dot::after { content:'✓'; color:#fff; font-size:11px; font-weight:700; }
+    .sign-row.checked .label { color:#f5f5f7; }
+
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:#000; }
+    ::-webkit-scrollbar-thumb { background:#3a3a3c; border-radius:3px; }
+  </style>
+</head>
+<body class="bg-ab text-ap font-sans overflow-x-hidden">
+
+  <!-- ─── NAV ─── -->
+  <nav class="fixed inset-x-0 top-0 z-50 nav-blur border-b border-white/[.08] h-[60px] flex items-center justify-between px-6">
+    <a href="#hero" class="text-xl font-bold tracking-tight">톨<span class="text-aa">리</span>스트</a>
+    <a href="https://play.google.com/store/apps/details?id=com.tallest.app"
+       target="_blank" rel="noopener"
+       class="bg-aa hover:bg-[#0071e3] text-white px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-105 active:scale-95">
+      무료 다운로드
+    </a>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-[120px] pb-24 hero-bg">
+    <!-- live badge -->
+    <div class="fu inline-flex items-center gap-1.5 bg-aa/10 border border-aa/30 text-aa text-[13px] font-semibold px-4 py-1.5 rounded-full mb-7">
+      <span class="w-[7px] h-[7px] bg-aa rounded-full pulse-dot"></span>
+      성장 예측 &amp; 키 성장 관리 앱
+    </div>
+    <!-- eyebrow -->
+    <p class="fu1 text-ao text-[15px] font-semibold tracking-wide mb-4">지금이 아니면 영원히 늦습니다</p>
+    <!-- H1 -->
+    <h1 class="fu2 text-[clamp(42px,7vw,82px)] font-extrabold tracking-[-2px] leading-[1.07] mb-7">
+      우리 아이의<br>
+      <span class="tg-blue">골든타임</span>,<br>
+      놓치고 있지 않나요?
+    </h1>
+    <!-- subtitle -->
+    <p class="fu3 text-[clamp(17px,2.2vw,21px)] text-ase max-w-[580px] leading-relaxed mb-11">
+      빨리 크는 아이가 오히려 위험할 수 있습니다.<br>
+      성조숙증을 조기에 발견하고, 아이의 미래를 지키세요.
+    </p>
+    <!-- CTA -->
+    <div class="fu4 flex flex-wrap gap-3.5 justify-center">
+      <a href="https://play.google.com/store/apps/details?id=com.tallest.app"
+         target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2.5 bg-aa hover:bg-[#0071e3] text-white px-9 py-[17px] rounded-full text-[17px] font-bold tracking-tight transition-all duration-300 hover:-translate-y-0.5 shadow-[0_0_32px_rgba(10,132,255,.32)] hover:shadow-[0_8px_44px_rgba(10,132,255,.52)]">
+        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.47A2.08 2.08 0 0 1 2 21.6V2.4A2.08 2.08 0 0 1 3.18.53l11.07 11.47zm2.74-2.85 13.35-7.7-2.87-2.98zM20.66 12c0 .74-.37 1.43-1.05 1.85l-2.11 1.22-3.21-3.07 3.21-3.07 2.12 1.22c.68.42 1.04 1.1 1.04 1.85zM5.92 3.38 18.27 11.1 15.4 14.08z"/></svg>
+        Google Play 무료 다운로드
+      </a>
+      <a href="#features"
+         class="inline-flex items-center gap-2 bg-as border border-white/[.08] text-ap px-8 py-[17px] rounded-full text-[17px] font-semibold transition-all duration-300 hover:bg-as2 hover:-translate-y-0.5">
+        앱 기능 살펴보기 →
+      </a>
+    </div>
+    <p class="fu5 mt-5 text-[13px] text-at">🍎 iPhone 버전 곧 출시 예정 &middot; 모든 기능 완전 무료</p>
+    <!-- scroll arrow -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 fu5">
+      <div class="w-[18px] h-[18px] border-r-2 border-b-2 border-at scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ─── STATS ─── -->
+  <section class="py-20 px-6" style="background:linear-gradient(180deg,transparent,rgba(255,69,58,.05) 50%,transparent)">
+    <div class="max-w-[920px] mx-auto reveal">
+      <div class="bg-ar/[.08] border border-ar/20 rounded-3xl p-12 md:p-16 text-center relative overflow-hidden">
+        <div class="absolute -top-1/2 left-1/2 -translate-x-1/2 w-[400px] h-[400px] pointer-events-none"
+             style="background:radial-gradient(circle,rgba(255,69,58,.07),transparent 70%)"></div>
+        <span class="text-5xl mb-4 block">📊</span>
+        <h2 class="text-[clamp(24px,4vw,40px)] font-extrabold tracking-tight text-[#ff6961] mb-4">
+          성조숙증 환자, 5년 새 80% 폭증
+        </h2>
+        <p class="text-ase text-[17px] max-w-lg mx-auto mb-11 leading-relaxed">
+          질병관리청(KDCA) 통계가 경고합니다.<br>우리 동네, 우리 아이 학교, 어쩌면 우리 집에도.
+        </p>
+        <div class="flex flex-wrap justify-center gap-8 md:gap-14">
+          <div class="text-center">
+            <div class="text-[clamp(34px,5vw,58px)] font-extrabold tracking-[-2px] leading-none text-aa mb-1.5">101,273</div>
+            <div class="text-sm text-ase font-medium">2018년 환자 수</div>
+          </div>
+          <div class="self-center text-[clamp(26px,4vw,44px)] font-bold text-ao">→</div>
+          <div class="text-center">
+            <div class="text-[clamp(34px,5vw,58px)] font-extrabold tracking-[-2px] leading-none text-ar mb-1.5">178,585</div>
+            <div class="text-sm text-ase font-medium">2022년 환자 수</div>
+          </div>
+          <div class="text-center">
+            <div class="text-[clamp(34px,5vw,58px)] font-extrabold tracking-[-2px] leading-none text-ar mb-1.5">+80%</div>
+            <div class="text-sm text-ase font-medium">5년간 증가율</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TRUTH ─── -->
+  <section class="py-24 px-6 story-bg">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="text-center reveal">
+        <p class="text-[13px] font-bold tracking-[1.5px] uppercase text-aa mb-4">진짜 이야기</p>
+        <h2 class="text-[clamp(28px,4vw,52px)] font-extrabold tracking-tight leading-[1.1] mb-5">
+          "우리 애가 잘 크네!"<br>그 말이 평생의 후회가 됐습니다
+        </h2>
+        <p class="text-[17px] text-ase max-w-[540px] mx-auto leading-relaxed">
+          빨리 크는 아이 = 성조숙증 위험 신호.<br>성장판이 조기에 닫히면 최종 키가 <strong class="text-ap">10~15 cm</strong> 손실됩니다.
+        </p>
+      </div>
+
+      <!-- quote card -->
+      <div class="max-w-[800px] mx-auto mt-14 bg-as border border-white/[.08] rounded-3xl p-10 md:p-12 reveal">
+        <p class="text-[clamp(19px,3vw,30px)] font-bold tracking-tight leading-[1.5] mb-6 text-ap">
+          <span class="text-[68px] leading-none align-[-0.35em] text-ao mr-1 font-serif">"</span>
+          초5 때 초경했는데, 그때가 성조숙증인 줄 몰랐어요.
+          진작 병원 갔더라면... 후회해도 소용없더라고요.
+        </p>
+        <p class="text-at text-[15px] mb-7">— 지은이(가명, 중3) 어머니의 이야기</p>
+        <div class="bg-ar/[.08] border border-ar/15 rounded-2xl p-6 space-y-3 text-[16px] text-ase">
+          <p class="text-[13px] font-bold tracking-[1px] uppercase text-ar mb-3">⚠ 지은이의 성장 결과</p>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span>부모 평균키 기준 예상 최종키</span>
+            <span class="text-ar font-bold">→</span>
+            <strong class="text-ap">165 cm</strong>
+          </div>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span>실제 최종키 (성조숙증 미치료)</span>
+            <span class="text-ar font-bold">→</span>
+            <strong class="text-ar">152 cm</strong>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-ar/20 flex-wrap">
+            <strong class="text-ar font-bold">손실된 키</strong>
+            <span class="text-ar font-bold">→</span>
+            <strong class="text-ar text-[26px] font-extrabold">−13 cm</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── GOLDEN TIME ─── -->
+  <section class="py-24 px-6 bg-as">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="text-center reveal">
+        <p class="text-[13px] font-bold tracking-[1.5px] uppercase text-ao mb-4">골든타임</p>
+        <h2 class="text-[clamp(28px,4vw,52px)] font-extrabold tracking-tight leading-[1.1] mb-5">
+          이 나이를 넘기면<br>되돌릴 수 없습니다
+        </h2>
+        <p class="text-[17px] text-ase max-w-[500px] mx-auto leading-relaxed">
+          성조숙증 치료의 골든타임.<br>이 시기가 지나면 성장판이 닫히기 시작합니다.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-14">
+        <div class="reveal bg-ab border border-white/[.08] rounded-2xl p-10 hover:-translate-y-1 hover:border-ao/30 transition-all duration-300">
+          <div class="text-5xl mb-4">👧</div>
+          <p class="text-[13px] font-bold tracking-[1px] uppercase text-ao mb-2">여아 골든타임</p>
+          <p class="text-[clamp(48px,6vw,68px)] font-extrabold tracking-[-3px] leading-none text-ao mb-4">만 8세</p>
+          <p class="text-ase leading-relaxed">만 8세 이전에 치료를 시작해야 효과적입니다.<br>가슴 발달, 음모 출현, 급성장이 신호입니다.</p>
+        </div>
+        <div class="reveal bg-ab border border-white/[.08] rounded-2xl p-10 hover:-translate-y-1 hover:border-ao/30 transition-all duration-300">
+          <div class="text-5xl mb-4">👦</div>
+          <p class="text-[13px] font-bold tracking-[1px] uppercase text-ao mb-2">남아 골든타임</p>
+          <p class="text-[clamp(48px,6vw,68px)] font-extrabold tracking-[-3px] leading-none text-ao mb-4">만 9세</p>
+          <p class="text-ase leading-relaxed">만 9세 이전이 치료 적기입니다.<br>고환 발달(4 ml 이상), 음모 출현이 주요 신호입니다.</p>
+        </div>
+        <div class="reveal md:col-span-2 bg-ar/[.06] border border-ar/15 rounded-2xl p-7 flex items-start gap-5">
+          <span class="text-4xl shrink-0 mt-0.5">⏳</span>
+          <p class="text-ase text-[17px] leading-relaxed">
+            지금 이 순간에도 <strong class="text-[#ff6961]">하루하루 성장판은 조금씩 닫혀갑니다.</strong>
+            골든타임을 놓치면 치료가 의미 없어지고, 아이는 평생 작은 키로 살아가게 됩니다.
+            <strong class="text-[#ff6961]">"조금만 더 지켜보자"는 생각이 가장 위험합니다.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WARNING SIGNS ─── -->
+  <section id="signs" class="py-24 px-6">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="text-center reveal">
+        <p class="text-[13px] font-bold tracking-[1.5px] uppercase text-aa mb-4">위험 신호 체크</p>
+        <h2 class="text-[clamp(28px,4vw,52px)] font-extrabold tracking-tight leading-[1.1] mb-5">
+          우리 아이, 혹시<br>이런 증상 있나요?
+        </h2>
+        <p class="text-[17px] text-ase max-w-[420px] mx-auto leading-relaxed">
+          하나라도 해당된다면 지금 당장 행동하세요.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14">
+        <!-- girl -->
+        <div class="reveal bg-as border border-white/[.08] rounded-3xl p-9">
+          <h3 class="text-xl font-bold mb-1">👧 우리 딸 (만 7-8세)</h3>
+          <p class="text-at text-sm mb-6">해당 항목을 클릭해 체크해보세요</p>
+          <div id="list-girl" class="divide-y divide-white/[.06]">
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'girl')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">가슴 몽우리가 살짝 만져진다</span>
+            </div>
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'girl')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">키가 1년에 7 cm 이상 자랐다</span>
+            </div>
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'girl')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">또래보다 머리카락이 유난히 많고 굵다</span>
+            </div>
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'girl')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">음모가 보이기 시작했다</span>
+            </div>
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'girl')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">체취가 강해졌다</span>
+            </div>
+          </div>
+          <div id="alert-girl" class="hidden mt-5 bg-ar/10 border border-ar/25 rounded-2xl px-5 py-4 text-[14px] text-[#ff6961] font-semibold text-center">
+            ⚠️ 하나 이상 해당! 지금 바로 톨리스트로 성장 기록을 시작하고, 소아청소년과 방문을 권장합니다.
+          </div>
+        </div>
+        <!-- boy -->
+        <div class="reveal bg-as border border-white/[.08] rounded-3xl p-9">
+          <h3 class="text-xl font-bold mb-1">👦 우리 아들 (만 8-9세)</h3>
+          <p class="text-at text-sm mb-6">해당 항목을 클릭해 체크해보세요</p>
+          <div id="list-boy" class="divide-y divide-white/[.06]">
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'boy')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">고환 크기가 커진 것 같다 (4 ml 이상)</span>
+            </div>
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'boy')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">키가 1년에 8 cm 이상 자랐다</span>
+            </div>
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'boy')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">목소리가 변하기 시작했다</span>
+            </div>
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'boy')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">음모가 나타났다</span>
+            </div>
+            <div class="sign-row flex items-center gap-3 py-3.5 cursor-pointer" onclick="toggleSign(this,'boy')">
+              <div class="dot w-[22px] h-[22px] shrink-0 rounded-full border-2 border-as3"></div>
+              <span class="label text-ase text-[15px]">여드름이 생겼다</span>
+            </div>
+          </div>
+          <div id="alert-boy" class="hidden mt-5 bg-ar/10 border border-ar/25 rounded-2xl px-5 py-4 text-[14px] text-[#ff6961] font-semibold text-center">
+            ⚠️ 하나 이상 해당! 지금 바로 톨리스트로 성장 기록을 시작하고, 소아청소년과 방문을 권장합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FEATURES ─── -->
+  <section id="features" class="py-24 px-6 feat-bg">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="text-center reveal">
+        <p class="text-[13px] font-bold tracking-[1.5px] uppercase text-aa mb-4">주요 기능</p>
+        <h2 class="text-[clamp(28px,4vw,52px)] font-extrabold tracking-tight leading-[1.1] mb-5">
+          과학이 지켜주는<br>우리 아이 성장
+        </h2>
+        <p class="text-[17px] text-ase max-w-[480px] mx-auto leading-relaxed">
+          단순한 키 기록 앱이 아닙니다. 조기 경보 시스템입니다.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-14">
+        <div class="reveal bg-as border border-white/[.08] rounded-3xl p-10 hover:-translate-y-1 hover:border-aa/25 transition-all duration-300">
+          <p class="text-[12px] font-bold text-aa tracking-widest mb-4">01</p>
+          <span class="text-5xl mb-5 block">🚨</span>
+          <h3 class="text-[22px] font-bold tracking-tight mb-3">조기 경보 시스템</h3>
+          <p class="text-ase leading-[1.75] text-[15px]">급성장 시기를 자동으로 감지합니다. 백분위 변화를 추적해 이상 징후를 즉시 알려드리고, "빨리 병원 가세요!" 알림으로 골든타임을 지켜줍니다.</p>
+          <span class="inline-block bg-aa/10 text-aa text-xs font-semibold px-2.5 py-1 rounded-lg mt-4">자동 감지</span>
+        </div>
+        <div class="reveal bg-as border border-white/[.08] rounded-3xl p-10 hover:-translate-y-1 hover:border-aa/25 transition-all duration-300">
+          <p class="text-[12px] font-bold text-aa tracking-widest mb-4">02</p>
+          <span class="text-5xl mb-5 block">📈</span>
+          <h3 class="text-[22px] font-bold tracking-tight mb-3">또래 비교 백분위 분석</h3>
+          <p class="text-ase leading-[1.75] text-[15px]">우리 아이가 100명 중 몇 등인지 시각적으로 확인. KDCA(질병관리청) 표준 데이터 기반으로 키, 체중, BMI를 종합 분석합니다.</p>
+          <span class="inline-block bg-aa/10 text-aa text-xs font-semibold px-2.5 py-1 rounded-lg mt-4">KDCA 표준</span>
+        </div>
+        <div class="reveal bg-as border border-white/[.08] rounded-3xl p-10 hover:-translate-y-1 hover:border-aa/25 transition-all duration-300">
+          <p class="text-[12px] font-bold text-aa tracking-widest mb-4">03</p>
+          <span class="text-5xl mb-5 block">🏥</span>
+          <h3 class="text-[22px] font-bold tracking-tight mb-3">병원 방문 필수 데이터</h3>
+          <p class="text-ase leading-[1.75] text-[15px]">지난 1년간 성장 그래프, 백분위 변화 추이, 예상 최종키 비교까지. 의사 선생님이 바로 진단할 수 있는 완벽한 자료를 자동으로 만들어줍니다.</p>
+          <span class="inline-block bg-aa/10 text-aa text-xs font-semibold px-2.5 py-1 rounded-lg mt-4">진단 지원</span>
+        </div>
+        <div class="reveal bg-as border border-white/[.08] rounded-3xl p-10 hover:-translate-y-1 hover:border-aa/25 transition-all duration-300">
+          <p class="text-[12px] font-bold text-aa tracking-widest mb-4">04</p>
+          <span class="text-5xl mb-5 block">🧬</span>
+          <h3 class="text-[22px] font-bold tracking-tight mb-3">사춘기 단계 자동 분석</h3>
+          <p class="text-ase leading-[1.75] text-[15px]">남아의 경우 고환 크기로 사춘기 단계를 자동 분석. 급성장기 시작 시점을 정확히 파악해 골든타임 내 대응이 가능합니다.</p>
+          <span class="inline-block bg-aa/10 text-aa text-xs font-semibold px-2.5 py-1 rounded-lg mt-4">사춘기 분석</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PREDICT METHODS ─── -->
+  <section class="py-24 px-6 bg-as">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="text-center reveal">
+        <p class="text-[13px] font-bold tracking-[1.5px] uppercase text-aa mb-4">3가지 예측 방법</p>
+        <h2 class="text-[clamp(28px,4vw,52px)] font-extrabold tracking-tight leading-[1.1] mb-5">
+          3중 검증으로<br>더 정확한 예측
+        </h2>
+        <p class="text-[17px] text-ase max-w-[440px] mx-auto leading-relaxed">
+          하나라도 이상하면 즉시 알 수 있어요.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-14">
+        <div class="reveal bg-ab border border-white/[.08] rounded-2xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
+          <div class="text-5xl mb-4">📊</div>
+          <h3 class="text-lg font-bold mb-1">백분위 기반 예측</h3>
+          <p class="text-[12px] font-bold tracking-[0.8px] uppercase text-aa mb-3">KDCA 표준</p>
+          <p class="text-ase text-sm leading-relaxed">질병관리청 표준 데이터 기반으로 또래 대비 성장 백분위를 정확하게 측정합니다.</p>
+        </div>
+        <div class="reveal bg-ab border border-white/[.08] rounded-2xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
+          <div class="text-5xl mb-4">🦴</div>
+          <h3 class="text-lg font-bold mb-1">뼈나이 기반 예측</h3>
+          <p class="text-[12px] font-bold tracking-[0.8px] uppercase text-aa mb-3">Bayley-Pinneau</p>
+          <p class="text-ase text-sm leading-relaxed">국제 표준 Bayley-Pinneau 방법으로 골 연령을 고려한 최종 키를 예측합니다.</p>
+        </div>
+        <div class="reveal bg-ab border border-white/[.08] rounded-2xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
+          <div class="text-5xl mb-4">👨‍👩‍👧</div>
+          <h3 class="text-lg font-bold mb-1">유전키 예측</h3>
+          <p class="text-[12px] font-bold tracking-[0.8px] uppercase text-aa mb-3">부모 키 기반</p>
+          <p class="text-ase text-sm leading-relaxed">부모의 키를 기반으로 유전적 잠재 최종키를 계산해 현재 성장 상태와 비교합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FREE ─── -->
+  <section class="py-20 px-6 text-center">
+    <div class="reveal inline-block" style="background:linear-gradient(135deg,rgba(48,209,88,.12),rgba(48,209,88,.04));border:1px solid rgba(48,209,88,.28);border-radius:28px;padding:48px 72px">
+      <p class="text-[14px] font-bold tracking-[1.5px] uppercase text-ag mb-3">가격</p>
+      <p class="text-[clamp(44px,7vw,76px)] font-extrabold tracking-[-3px] leading-none text-ag">완전 무료</p>
+      <p class="text-ase text-lg mt-3 leading-relaxed">또래 비교 · 사춘기 분석 · 급성장 알림<br>모든 기능이 100% 무료입니다</p>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section id="cta" class="py-28 px-6 text-center cta-bg">
+    <div class="reveal">
+      <h2 class="text-[clamp(32px,6vw,72px)] font-extrabold tracking-[-2px] leading-[1.05] mb-7">
+        "미리 알았더라면..."<br>
+        <span class="text-aa">이 말을 하지 마세요.</span>
+      </h2>
+      <p class="text-xl text-ase max-w-[520px] mx-auto mb-12 leading-relaxed">
+        우리 아이의 성장, 더 이상 운에 맡기지 마세요.<br>
+        지금 당장 톨리스트로 기록을 시작하세요.
+      </p>
+      <a href="https://play.google.com/store/apps/details?id=com.tallest.app"
+         target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2.5 bg-aa hover:bg-[#0071e3] text-white px-11 py-[22px] rounded-full text-[19px] font-bold tracking-tight transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] shadow-[0_0_44px_rgba(10,132,255,.36)] hover:shadow-[0_14px_54px_rgba(10,132,255,.52)]">
+        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.47A2.08 2.08 0 0 1 2 21.6V2.4A2.08 2.08 0 0 1 3.18.53l11.07 11.47zm2.74-2.85 13.35-7.7-2.87-2.98zM20.66 12c0 .74-.37 1.43-1.05 1.85l-2.11 1.22-3.21-3.07 3.21-3.07 2.12 1.22c.68.42 1.04 1.1 1.04 1.85zM5.92 3.38 18.27 11.1 15.4 14.08z"/></svg>
+        Google Play 무료 다운로드
+      </a>
+      <p class="mt-6 text-sm text-at">🍎 iPhone 버전도 곧 출시 예정 · 지금 당장 시작하세요</p>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="bg-as border-t border-white/[.08] py-12 px-6 text-center">
+    <p class="text-[22px] font-extrabold tracking-tight mb-3">톨<span class="text-aa">리</span>스트</p>
+    <p class="text-at text-sm max-w-[460px] mx-auto mb-7 leading-[1.8]">
+      성장 예측 &amp; 키 성장 관리 앱<br>
+      우리 아이의 골든타임을 과학적으로 지켜드립니다.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="https://play.google.com/store/apps/details?id=com.tallest.app"
+         target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 bg-ab border border-white/[.08] hover:border-aa text-ase hover:text-ap text-sm px-5 py-2.5 rounded-xl transition-all duration-200">
+        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.47A2.08 2.08 0 0 1 2 21.6V2.4A2.08 2.08 0 0 1 3.18.53l11.07 11.47zm2.74-2.85 13.35-7.7-2.87-2.98zM20.66 12c0 .74-.37 1.43-1.05 1.85l-2.11 1.22-3.21-3.07 3.21-3.07 2.12 1.22c.68.42 1.04 1.1 1.04 1.85zM5.92 3.38 18.27 11.1 15.4 14.08z"/></svg>
+        Google Play
+      </a>
+      <a href="https://blog.naver.com/fun-coding/224027228066"
+         target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 bg-ab border border-white/[.08] hover:border-aa text-ase hover:text-ap text-sm px-5 py-2.5 rounded-xl transition-all duration-200">
+        📝 네이버 블로그
+      </a>
+    </div>
+    <p class="mt-8 text-[13px] text-at">© 2025 톨리스트 · 잔재미코딩 Dave Lee · 부모가 만든 부모를 위한 앱</p>
+  </footer>
+
+  <!-- ─── FLOATING CTA ─── -->
+  <a href="https://play.google.com/store/apps/details?id=com.tallest.app"
+     target="_blank" rel="noopener"
+     id="floatBtn"
+     class="floating-btn fixed bottom-7 right-7 z-50 inline-flex items-center gap-2 bg-aa hover:bg-[#0071e3] text-white px-6 py-3.5 rounded-full text-[15px] font-bold shadow-[0_8px_32px_rgba(10,132,255,.42)] hover:shadow-[0_12px_44px_rgba(10,132,255,.54)] hover:-translate-y-0.5 transition-all duration-300">
+    📲 무료 다운로드
+  </a>
+
+  <script>
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Floating button
+    const floatBtn = document.getElementById('floatBtn');
+    window.addEventListener('scroll', () => {
+      floatBtn.classList.toggle('on', window.scrollY > 380);
+    }, { passive: true });
+
+    // Sign checklist
+    function toggleSign(row, gender) {
+      row.classList.toggle('checked');
+      const count = document.querySelectorAll(`#list-${gender} .sign-row.checked`).length;
+      document.getElementById(`alert-${gender}`).classList.toggle('hidden', count === 0);
+    }
+
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
